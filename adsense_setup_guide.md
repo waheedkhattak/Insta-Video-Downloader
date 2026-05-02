@@ -103,4 +103,4 @@ Before AdSense approves you, create these pages (link them from footer):
 4. Get backlinks from tool listing sites
 
 > [!IMPORTANT]
-> Make sure your site has **original content** beyond just the tool. Google requires quality content for AdSense approval. Add a blog, FAQ section, or detailed how-to guides.
+> Make sure your site has **original content** beyond just the tool. Google requires quality content for AdSense approval. Add a blog, FAQ section, or detailed how-to guides..
