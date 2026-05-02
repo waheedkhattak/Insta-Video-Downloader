@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SaveMedia Admin — Login</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0a0a0f;--surface:#12121a;--surface2:#1a1a2e;--border:#2a2a3e;--primary:#6c5ce7;--primary-glow:#6c5ce740;--accent:#00cec9;--text:#e8e8f0;--text-dim:#8888a0;--danger:#ff6b6b;--radius:16px}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;align-items:center;justify-content:center}
+body::before{content:'';position:fixed;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle at 30% 20%,#6c5ce710 0%,transparent 50%),radial-gradient(circle at 70% 80%,#00cec908 0%,transparent 50%);z-index:0;animation:bgShift 20s ease infinite alternate}
+@keyframes bgShift{to{transform:translate(5%,3%)}}
+
+.login-container{position:relative;z-index:1;width:100%;max-width:420px;padding:20px}
+.login-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:48px 36px;box-shadow:0 8px 32px rgba(0,0,0,0.5);animation:slideUp .5s ease}
+@keyframes slideUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+
+.login-header{text-align:center;margin-bottom:36px}
+.login-header .icon{width:64px;height:64px;border-radius:16px;background:linear-gradient(135deg,var(--primary),var(--accent));display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:1.6rem;color:#fff;box-shadow:0 4px 24px var(--primary-glow)}
+.login-header h1{font-size:1.5rem;font-weight:800;margin-bottom:6px}
+.login-header p{color:var(--text-dim);font-size:.9rem}
+
+.form-group{margin-bottom:20px}
+.form-group label{display:block;font-size:.85rem;font-weight:600;color:var(--text-dim);margin-bottom:8px}
+.form-group .input-wrap{display:flex;align-items:center;background:var(--surface2);border:2px solid var(--border);border-radius:12px;transition:border-color .3s}
+.form-group .input-wrap:focus-within{border-color:var(--primary);box-shadow:0 0 20px var(--primary-glow)}
+.form-group .input-wrap i{padding:0 16px;color:var(--text-dim);font-size:.9rem}
+.form-group input{flex:1;padding:14px 16px 14px 0;background:transparent;border:none;color:var(--text);font-size:.95rem;font-family:'Inter',sans-serif;outline:none}
+.form-group input::placeholder{color:var(--text-dim)}
+
+.error-msg{background:rgba(255,107,107,0.1);border:1px solid rgba(255,107,107,0.3);border-radius:10px;padding:12px 16px;margin-bottom:20px;color:var(--danger);font-size:.85rem;display:flex;align-items:center;gap:8px;animation:shake .4s ease}
+@keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
+
+.login-btn{width:100%;padding:16px;border:none;border-radius:12px;background:linear-gradient(135deg,var(--primary),#8b7cf7);color:#fff;font-size:1rem;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;transition:all .3s;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 4px 20px var(--primary-glow)}
+.login-btn:hover{transform:translateY(-2px);box-shadow:0 8px 30px var(--primary-glow)}
+.login-btn:active{transform:translateY(0)}
+
+.back-link{text-align:center;margin-top:24px}
+.back-link a{color:var(--text-dim);text-decoration:none;font-size:.85rem;transition:.3s}
+.back-link a:hover{color:var(--accent)}
+.back-link a i{margin-right:4px}
+</style>
+</head>
+<body>
+
+<div class="login-container">
+<div class="login-card">
+  <div class="login-header">
+    <div class="icon"><i class="fas fa-shield-halved"></i></div>
+    <h1>Admin Access</h1>
+    <p>Sign in to view analytics dashboard</p>
+  </div>
+
+  {% if error %}
+  <div class="error-msg">
+    <i class="fas fa-exclamation-circle"></i> {{ error }}
+  </div>
+  {% endif %}
+
+  <form method="POST" action="/admin/login">
+    <div class="form-group">
+      <label for="username">Username</label>
+      <div class="input-wrap">
+        <i class="fas fa-user"></i>
+        <input type="text" id="username" name="username" placeholder="Enter username" required autofocus autocomplete="username">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="password">Password</label>
+      <div class="input-wrap">
+        <i class="fas fa-lock"></i>
+        <input type="password" id="password" name="password" placeholder="Enter password" required autocomplete="current-password">
+      </div>
+    </div>
+
+    <button type="submit" class="login-btn">
+      <i class="fas fa-right-to-bracket"></i> Sign In
+    </button>
+  </form>
+
+  <div class="back-link">
+    <a href="/"><i class="fas fa-arrow-left"></i> Back to SaveMedia</a>
+  </div>
+</div>
+</div>
+
+</body>
+</html>

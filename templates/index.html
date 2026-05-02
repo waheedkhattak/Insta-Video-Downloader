@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SaveMedia - Download Videos & Images from Instagram, YouTube, Pinterest, Facebook</title>
+<meta name="description" content="Free online tool to download videos and images from Instagram, YouTube, Pinterest, and Facebook. Fast, easy, and no registration required.">
+
+<!-- Open Graph / Social Meta Tags -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://savemedia.com/">
+<meta property="og:title" content="SaveMedia - Universal Media Downloader">
+<meta property="og:description" content="Download videos and images from Instagram, YouTube, Pinterest, and Facebook instantly.">
+<meta property="og:image" content="/static/og-image.jpg">
+
+<!-- Favicon -->
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⬇️</text></svg>">
+<link rel="manifest" href="/static/manifest.json">
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<!-- Google AdSense -->
+<!-- REPLACE ca-pub-XXXXXXXXXXXXXXXX with your actual AdSense Publisher ID -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<nav>
+<div class="logo"><i class="fas fa-cloud-arrow-down"></i> SaveMedia</div>
+<div class="nav-links">
+<button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Toggle Dark/Light Mode"><i class="fas fa-moon"></i></button>
+<a href="#features">Features</a>
+<a href="#how-to">How To Use</a>
+<a href="https://github.com" target="_blank"><i class="fab fa-github"></i></a>
+</div>
+</nav>
+
+<section class="hero">
+<h1>Download Media From<br><span class="gradient">Any Platform, Instantly</span></h1>
+<p>Grab videos and images from Instagram, YouTube, Pinterest & Facebook — fast, free, and hassle-free.</p>
+</section>
+
+<!-- AD ZONE 1: Below Hero (Leaderboard 728x90) -->
+<div class="ad-container wide" id="adZone1">
+  <div class="ad-slot leaderboard">
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="AD_SLOT_1" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+    <span class="ad-placeholder">Ad Space - Leaderboard (728x90)</span>
+  </div>
+</div>
+
+<div class="tabs" id="platformTabs">
+<button class="tab active" data-platform="all" onclick="switchTab(this)"><i class="fas fa-globe"></i> All Platforms</button>
+<button class="tab instagram" data-platform="instagram" onclick="switchTab(this)"><i class="fab fa-instagram"></i> Instagram</button>
+<button class="tab youtube" data-platform="youtube" onclick="switchTab(this)"><i class="fab fa-youtube"></i> YouTube</button>
+<button class="tab pinterest" data-platform="pinterest" onclick="switchTab(this)"><i class="fab fa-pinterest"></i> Pinterest</button>
+<button class="tab facebook" data-platform="facebook" onclick="switchTab(this)"><i class="fab fa-facebook"></i> Facebook</button>
+</div>
+
+<div class="input-section">
+<div class="input-wrap">
+<input type="url" id="urlInput" placeholder="Paste your video or image link here..." autocomplete="off">
+<button class="paste-btn" onclick="pasteFromClipboard()" title="Paste from clipboard"><i class="fas fa-clipboard"></i></button>
+<button class="fetch-btn" id="fetchBtn" onclick="fetchInfo()"><i class="fas fa-search"></i> Fetch</button>
+</div>
+<div class="status" id="status"></div>
+<div class="progress-container" id="progressContainer">
+  <div class="progress-bar" id="progressBar"></div>
+</div>
+</div>
+
+<!-- AD ZONE 2: Below Input (Responsive) -->
+<div class="ad-container" id="adZone2">
+  <div class="ad-slot banner">
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="AD_SLOT_2" data-ad-format="auto" data-full-width-responsive="true"></ins>
+    <span class="ad-placeholder">Ad Space - Banner</span>
+  </div>
+</div>
+
+<div class="result-section hidden" id="resultSection">
+<div class="result-card">
+<div class="media-preview-container">
+  <img class="result-thumb" id="resultThumb" src="" alt="Thumbnail" referrerpolicy="no-referrer" onerror="this.style.display='none'">
+  <video class="result-video hidden" id="resultVideo" controls referrerpolicy="no-referrer" style="width:100%; max-height:400px; aspect-ratio:16/9; background:#0a0a0f; border-bottom: 1px solid var(--border); border-radius: var(--radius) var(--radius) 0 0;"></video>
+  <audio class="result-audio hidden" id="resultAudio" controls style="width:100%; display:none; padding: 16px; background:var(--surface2); border-bottom: 1px solid var(--border);"></audio>
+</div>
+<div class="result-body">
+<h3 id="resultTitle"></h3>
+<div class="result-meta" id="resultMeta"></div>
+<div class="format-selector hidden" id="formatSelector">
+<label>Select Quality</label>
+<select id="formatSelect"></select>
+</div>
+<div class="dl-group">
+  <button class="dl-btn primary" id="downloadBtn" onclick="downloadMedia()">
+  <i class="fas fa-download"></i> Download
+  </button>
+  <button class="qr-btn" onclick="generateQR()" title="Share via QR Code">
+  <i class="fas fa-qrcode"></i>
+  </button>
+</div>
+<div class="qr-container" id="qrContainer">
+  <p style="margin-bottom:8px;font-size:0.85rem;color:var(--text-dim);">Scan to download on mobile</p>
+  <img id="qrImage" src="" alt="QR Code">
+</div>
+</div>
+</div>
+</div>
+
+<!-- AD ZONE 3: After Result / Before Features (Rectangle 336x280) -->
+<div class="ad-container" id="adZone3">
+  <div class="ad-slot rectangle">
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="AD_SLOT_3" data-ad-format="rectangle" data-full-width-responsive="true"></ins>
+    <span class="ad-placeholder">Ad Space - Rectangle (336x280)</span>
+  </div>
+</div>
+
+<section class="features" id="features">
+<h2>Supported <span class="gradient">Platforms</span></h2>
+<div class="features-grid">
+<div class="feature-card">
+<div class="icon"><i class="fab fa-instagram"></i></div>
+<h3>Instagram</h3>
+<p>Download Reels, Stories, Posts, IGTV videos and images directly.</p>
+</div>
+<div class="feature-card">
+<div class="icon"><i class="fab fa-youtube"></i></div>
+<h3>YouTube</h3>
+<p>Save videos in multiple qualities — from 360p to 4K. Shorts too!</p>
+</div>
+<div class="feature-card">
+<div class="icon"><i class="fab fa-pinterest"></i></div>
+<h3>Pinterest</h3>
+<p>Grab Pins, video pins, and high-res images from any board.</p>
+</div>
+<div class="feature-card">
+<div class="icon"><i class="fab fa-facebook"></i></div>
+<h3>Facebook</h3>
+<p>Download public videos, Reels, and shared media from Facebook.</p>
+</div>
+</div>
+</section>
+
+<!-- AD ZONE 4: Between Features & How-to (Leaderboard) -->
+<div class="ad-container wide" id="adZone4">
+  <div class="ad-slot leaderboard">
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="AD_SLOT_4" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+    <span class="ad-placeholder">Ad Space - Leaderboard (728x90)</span>
+  </div>
+</div>
+
+<section class="platforms" id="how-to">
+<h2>How It Works</h2>
+<p>Three simple steps to download any media</p>
+<div class="steps">
+<div class="step">
+<div class="step-num">1</div>
+<h3>Paste the Link</h3>
+<p>Copy the URL of the video or image from your favourite platform.</p>
+</div>
+<div class="step">
+<div class="step-num">2</div>
+<h3>Fetch Info</h3>
+<p>Click Fetch to preview the media and choose your preferred quality.</p>
+</div>
+<div class="step">
+<div class="step-num">3</div>
+<h3>Download</h3>
+<p>Hit Download and save it straight to your device. That's it!</p>
+</div>
+</div>
+</section>
+
+<!-- AD ZONE 5: Above Footer (Responsive) -->
+<div class="ad-container wide" id="adZone5">
+  <div class="ad-slot banner">
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="AD_SLOT_5" data-ad-format="auto" data-full-width-responsive="true"></ins>
+    <span class="ad-placeholder">Ad Space - Banner</span>
+  </div>
+</div>
+
+
+
+<footer>
+<p>&copy; 2026 SaveMedia — All rights reserved. Built with <i class="fas fa-heart" style="color:var(--danger)"></i></p>
+<div class="footer-links">
+  <a href="/privacy" id="privacyLink">Privacy Policy</a>
+  <a href="/terms" id="termsLink">Terms of Service</a>
+  <a href="/contact" id="contactLink">Contact</a>
+  <a href="/dmca" id="dmcaLink">DMCA</a>
+</div>
+</footer>
+
+<!-- Cookie Consent Banner (Required for AdSense) -->
+<div class="cookie-banner" id="cookieBanner">
+  <p>We use cookies to serve personalized ads and improve your experience. By using our site, you consent to our <a href="/privacy">Privacy Policy</a>.</p>
+  <button class="cookie-btn accept" onclick="acceptCookies()">Accept All</button>
+  <button class="cookie-btn decline" onclick="declineCookies()">Essential Only</button>
+</div>
+
+<script src="/static/app.js"></script>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/static/sw.js').then(reg => {
+        console.log('SW registered:', reg.scope);
+      }).catch(err => console.log('SW reg failed:', err));
+    });
+  }
+</script>
+</body>
+</html>

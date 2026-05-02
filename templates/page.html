@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{ title }} - SaveMedia</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⬇️</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="/static/style.css">
+<style>
+.legal-content { max-width: 800px; margin: 120px auto 60px; padding: 40px; background: var(--surface); border-radius: var(--radius); border: 1px solid var(--border); }
+.legal-content h1 { margin-bottom: 24px; color: var(--text); font-size: 2.2rem; }
+.legal-content h2 { margin-top: 32px; margin-bottom: 16px; color: var(--text); font-size: 1.4rem; }
+.legal-content p { margin-bottom: 16px; color: var(--text-dim); line-height: 1.6; }
+.legal-content ul { margin-left: 24px; margin-bottom: 16px; color: var(--text-dim); line-height: 1.6; }
+.legal-content a { color: var(--primary); text-decoration: none; }
+.legal-content a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<nav>
+<div class="logo"><a href="/" style="text-decoration:none; color:inherit;"><i class="fas fa-cloud-arrow-down"></i> SaveMedia</a></div>
+<div class="nav-links">
+<button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Toggle Dark/Light Mode"><i class="fas fa-moon"></i></button>
+<a href="/">Home</a>
+</div>
+</nav>
+
+<div class="legal-content">
+  {{ content | safe }}
+</div>
+
+<footer>
+<p>&copy; 2026 SaveMedia — All rights reserved.</p>
+</footer>
+
+<script>
+function toggleTheme() {
+  const body = document.body;
+  const icon = document.querySelector('#themeToggle i');
+  if (body.classList.contains('light-mode')) {
+    body.classList.remove('light-mode');
+    localStorage.setItem('theme', 'dark');
+    if(icon) { icon.classList.remove('fa-sun'); icon.classList.add('fa-moon'); }
+  } else {
+    body.classList.add('light-mode');
+    localStorage.setItem('theme', 'light');
+    if(icon) { icon.classList.remove('fa-moon'); icon.classList.add('fa-sun'); }
+  }
+}
+window.addEventListener('DOMContentLoaded', () => {
+  const theme = localStorage.getItem('theme');
+  const icon = document.querySelector('#themeToggle i');
+  if (theme === 'light') {
+    document.body.classList.add('light-mode');
+    if(icon) { icon.classList.remove('fa-moon'); icon.classList.add('fa-sun'); }
+  }
+});
+</script>
+</body>
+</html>
